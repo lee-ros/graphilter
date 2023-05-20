@@ -12,8 +12,14 @@ def main():
             outer_coeff=0.1, inner_coeff=20, inner_offset=np.pi    
         )
     )
+    slow_wave = Sin(
+        base_signal=noise,
+        config=GeneratorConfig(
+            outer_coeff=0.5, inner_coeff=0.1
+        )
+    )
     
-    sig_chain = SignalChain([base, noise])
+    sig_chain = SignalChain([base, noise, slow_wave])
     sig_chain.process()
 
 
