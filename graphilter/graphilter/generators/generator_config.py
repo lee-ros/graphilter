@@ -4,8 +4,8 @@ from dataclasses import dataclass, fields
 
 @dataclass
 class GeneratorConfig:
-    outer_coeff: float = 1.0
-    outer_offset: float = 0.0
-    inner_coeff: float = 1.0
-    inner_offset: float = 0.0
+    amplitude: float = 1.0
+    y_offset: float = 0.0
+    frequency: float = 1.0
+    phase: float = 0.0
     power: float = 1.0
