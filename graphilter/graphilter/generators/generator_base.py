@@ -12,7 +12,7 @@ class GeneratorBase(SignalBase):
         *,
         start=0,
         end=0,
-        step=100,
+        f_s=100,
         base_signal: typing.Optional[SignalBase] = None,
         config: GeneratorConfig = None,
         generator_function: typing.Callable[[np.array], None]
@@ -23,21 +23,21 @@ class GeneratorBase(SignalBase):
         if base_signal is not None:
             super().__init__(base_signal=base_signal)
         else:
-            super().__init__(start=start, end=end, step=step)
-            self._x = np.linspace(self._start, self._end, step)
-            self._signal = np.zeros(step)
+            super().__init__(start=start, end=end, f_S=f_s)
+            self._x = np.linspace(self._start, self._end, f_s)
+            self._signal = np.zeros(f_s)
 
     def process(self):
         self._processed_signal = (
             self._signal
-            + self._config.outer_coeff
+            + self._config.amplitude
             * (
                 self._generator_function(
-                    self._config.inner_coeff * self._x + self._config.inner_offset
+                    self._config.frequency * self._x + self._config.phase
                 )
                 ** self._config.power
             )
-            + self._config.outer_offset
+            + self._config.y_offset
         )
 
         self.send_processed_to_outputs()

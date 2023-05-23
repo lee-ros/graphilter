@@ -15,7 +15,7 @@ class SignalBase:
         *,
         start=0,
         end=0,
-        step=1000,
+        f_S=1000,
         base_signal: typing.Optional["SignalBase"] = None
     ):
         self._outputs: typing.List[SignalBase] = []
@@ -28,7 +28,7 @@ class SignalBase:
         else:
             self._start = start
             self._end = end
-            self._step = step
+            self._f_s = f_S
 
 
     @property
@@ -58,6 +58,9 @@ class SignalBase:
         input._outputs.append(self)
         
         self._signal = input.processed_signal
+        self._start = input._start
+        self._end = input._end
+        self._f_s = input._f_s
         self._x = input.x
 
     def add_output(self, output: "SignalBase"):
