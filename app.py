@@ -1,22 +1,28 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from graphilter.generators import Cos, Sin, GeneratorConfig, Sawtooth
-from graphilter.utils import SignalChain
+from graphilter import (
+    generators,
+    filters,
+    utils,
+)
 
 
 def main():
-    base = Sawtooth(end=20, f_s=5000)
+    # base = generators.Sawtooth(end=5, f_s=1000)
 
-    # base = Cos(start=-10 * np.pi, end=10 * np.pi, f_s=10000)
-    noise = Sin(
-        config=GeneratorConfig(amplitude=0.1, frequency=20, phase=np.pi),
+    base = generators.Cos(start=-10 * np.pi, end=10 * np.pi, f_s=5000)
+    noise = generators.Sin(
+        config=generators.GeneratorConfig(amplitude=0.1, frequency=50, phase=np.pi),
     )
-    slow_wave = Sin(
-        config=GeneratorConfig(amplitude=0.5, frequency=0.1)
+    slow_wave = generators.Sin(
+        config=generators.GeneratorConfig(amplitude=0.5, frequency=0.1)
     )
+    
+    median = filters.Median(window_size=25)
+    mean = filters.Mean(window_size=25)
 
-    sig_chain = SignalChain([base])
+    sig_chain = utils.SignalChain([base, noise, median, mean])
     sig_chain.process()
 
     plt.plot(sig_chain.x, sig_chain.processed_signal)
