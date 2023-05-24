@@ -33,7 +33,7 @@ class GeneratorBase(SignalBase):
             + self._config.amplitude
             * (
                 self._generator_function(
-                    self._config.frequency * self._x + self._config.phase
+                    np.pi * self._config.frequency * self._x + self._config.phase
                 )
                 ** self._config.power
             )
