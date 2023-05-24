@@ -6,7 +6,7 @@ from graphilter.utils import SignalChain
 
 
 def main():
-    base = Sawtooth(start=-100, end=100, f_s=5000)
+    base = Sawtooth(end=20, f_s=5000)
 
     # base = Cos(start=-10 * np.pi, end=10 * np.pi, f_s=10000)
     noise = Sin(
